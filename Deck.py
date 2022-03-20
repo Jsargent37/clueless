@@ -38,3 +38,6 @@ class Deck:
         else:
             print("Incorrect number of items. Try again")
             return(-1)
+
+
+    #can we make a class to 

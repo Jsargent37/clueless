@@ -8,6 +8,7 @@ class Player:
         self.deck = hand
         
     def makeSuggestion(self,deck):
+
         suggestion_weapon = deck[0]
         suggestion_room = deck[1]
         suggestion_suspect = deck[2]
