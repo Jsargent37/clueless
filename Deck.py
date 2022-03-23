@@ -39,7 +39,6 @@ class Deck:
             print("Incorrect number of items. Try again")
             return(-1)
 
-
     def remainder(self):
         if len(self.cards)>0:
             return(self.cards)
