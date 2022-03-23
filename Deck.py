@@ -40,4 +40,8 @@ class Deck:
             return(-1)
 
 
-    #can we make a class to 
+    def remainder(self):
+        if len(self.cards)>0:
+            return(self.cards)
+        else:
+            return(None)
