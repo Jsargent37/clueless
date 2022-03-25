@@ -10,11 +10,7 @@ coordinate.
 class Board:
     def __init__(self):
         ## represents the game board
-        self.gameBoard = [[2, 1, 2, 1, 2],
-        [1, 0, 1, 0, 1],
-        [2, 1, 2, 1, 2],
-        [1, 0, 1, 0, 1],
-        [2, 1, 2, 1, 2]]
+        self.gameBoard = [[2, 1, 2, 1, 2], [1, 0, 1, 0, 1], [2, 1, 2, 1, 2], [1, 0, 1, 0, 1], [2, 1, 2, 1, 2]]
 
         ##holds the name of rooms on the board using their coordinates as keys
         self.roomsCor = {(0,0):"Study", (0,1):"Hallway", (0,2):"Hall", (0,3):"Hallway", (0,4):"Lounge",
@@ -26,7 +22,6 @@ class Board:
     def whereCanIMoveTo(self, cord):
         i, j = cord[0], cord[1]
         movesCords = []
-<<<<<<< HEAD
 
         ## this section checks to see if a secret passage exists in the room
         if i == 0 and j == 0:
@@ -39,14 +34,18 @@ class Board:
             movesCords.append((0,0))
         
         ##This section checks all directions for adjacent rooms
-        if self.gameBoard[i-1][j] == 1 or self.gameBoard[i-1][j] == 2:
-            movesCords.append((i-1,j))
-        if self.gameBoard[i][j-1] == 1 or self.gameBoard[i][j-1] == 2:
-            movesCords.append((i,j-1))
-        if self.gameBoard[i+1][j] == 1 or self.gameBoard[i+1][j] == 2:
-            movesCords.append((i+1,j))
-        if self.gameBoard[i][j+1] == 1 or self.gameBoard[i][j+1] == 2:
-            movesCords.append((i,j+1))
+        if i-1 != -1:
+            if self.gameBoard[i-1][j] == 1 or self.gameBoard[i-1][j] == 2:
+                movesCords.append((i-1,j))
+        if j-1 != -1:
+            if self.gameBoard[i][j-1] == 1 or self.gameBoard[i][j-1] == 2:
+                movesCords.append((i,j-1))
+        if i+1 != 5:
+            if self.gameBoard[i+1][j] == 1 or self.gameBoard[i+1][j] == 2:
+                movesCords.append((i+1,j))
+        if j+1 != 5:
+            if self.gameBoard[i][j+1] == 1 or self.gameBoard[i][j+1] == 2:
+                movesCords.append((i,j+1))
         
         ##Then the coordinates for all potential moves is returned
         return movesCords
@@ -55,51 +54,11 @@ class Board:
     def blockAndUnblockHallway(self, cord):
         i, j = cord[0], cord[1]
         if self.gameBoard[i][j] == 1:
-            self.gameBoard = -1
+            self.gameBoard[i][j] = -1
         elif self.gameBoard[i][j] == -1:
-            self.gameBoard = 1
+            self.gameBoard[i][j] = 1
 
     ##This function returns the name of the room
     def returnRoom(self, cord):
         cord1 = (cord[0], cord[1])
         return self.roomsCor.get(cord1)
-=======
-
-        ## this section checks to see if a secret passage exists in the room
-        if i == 0 and j == 0:
-            movesCords.append((4,4))
-        elif i == 4 and j == 0:
-            movesCords.append((0,4))
-        elif i == 0 and j == 4:
-            movesCords.append((4,0))
-        elif i == 4 and j == 4:
-            movesCords.append((0,0))
-        
-        ##This section checks all directions for adjacent rooms
-        if self.gameBoard[i-1][j] == 1 or self.gameBoard[i-1][j] == 2:
-            movesCords.append((i-1,j))
-        if self.gameBoard[i][j-1] == 1 or self.gameBoard[i][j-1] == 2:
-            movesCords.append((i,j-1))
-        if self.gameBoard[i+1][j] == 1 or self.gameBoard[i+1][j] == 2:
-            movesCords.append((i+1,j))
-        if self.gameBoard[i][j+1] == 1 or self.gameBoard[i][j+1] == 2:
-            movesCords.append((i,j+1))
-        
-        ##Then the coordinates for all potential moves is returned
-        return movesCords
-
-    ##This function blocks and unblocks hallways
-    def blockAndUnblockHallway(self, cord):
-        i, j = cord[0], cord[1]
-        if self.gameBoard[i][j] == 1:
-            self.gameBoard = -1
-        elif self.gameBoard[i][j] == -1:
-            self.gameBoard = 1
-
-    ##This function returns the name of the room
-    def returnRoom(self, cord):
-        cord1 = (cord[0], cord[1])
-        return self.roomsCor.get(cord1)
-
-    #This function returns the position
->>>>>>> 8627b514f103945ca608d77e0581bb88c38bdbb8

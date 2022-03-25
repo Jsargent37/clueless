@@ -1,6 +1,7 @@
 from Deck import Deck
 from Game_Board import Board
 from Player import Player
+
 class Clue:
     def __init__(self, player_names):
         self.total_players = len(player_names)
@@ -20,13 +21,12 @@ class Clue:
         self.set_players = [self.ms_scarlet, self.col_mustart, self.ms_white, self.mr_green, self.ms_peacock, self.prof_plum]
 
         for i in range(self.total_players):
-            self.players[i].playing = True
-            self.players[i].playerHand = self.deck.deal(self.cards_to_deal)
-            self.board.blockAndUnblockHallway(self.players[i].position)
+            self.set_players[i].playing = True
+            self.set_players[i].setPlayerHand(self.deck.deal(self.cards_to_deal))
+            self.board.blockAndUnblockHallway(self.set_players[i].getCurrentPosition())
         
         self.leftoverCards = self.deck.remainder()
 
-        
     #Move players on board
     #ryan lee 
     def move(self, location):
@@ -67,8 +67,6 @@ class Clue:
 
         return self.found
 
-            
-
     def accuse(self, accusation):
         winner = False
         winner = self.deck.guess(accusation)
@@ -78,22 +76,35 @@ class Clue:
     def testWinner(self):
         pass
 
-
-
-
+def main():
+    newGame = Clue(["Jack", "Michelle", "Rylee"])
     
+    print()
+    print("Winning Accusation:")
+    print(newGame.deck.killer)
+    print()
+    for i in range(len(newGame.set_players)):
+        if newGame.set_players[i].playing == True:
+            print("Player:")
+            print(newGame.set_players[i].getName())
+            print("Player's hand:")
+            print(newGame.set_players[i].playerHand)
+            print("Player's Current Position as Coordinate:")
+            print(newGame.set_players[i].getCurrentPosition())
+            print("Player's Current Position as Room:")
+            print(newGame.board.returnRoom(newGame.set_players[i].getCurrentPosition()))
+            print("Player's Possible Moves as Coordinates:")
+            playerMoves = newGame.board.whereCanIMoveTo(newGame.set_players[i].getCurrentPosition())
+            print(playerMoves)
+            print("Player's Possible Moves as Rooms: ")
+            playerRooms = []
+            for j in range(len(playerMoves)):
+                playerRooms.append(newGame.board.returnRoom(playerMoves[j]))
+            print(playerRooms)
+            print()
+    
+    print("Excess Cards:")
+    print(newGame.leftoverCards)
+    print()
 
-
-
-        
-        
-
-
-
-#player1 = Playergame name)
-
-#gem install rails --version 7.0.2.3s
-#card format = [room, weapon, suspect]
-#player will make accusation, and deck class will check
-#player will pass other players a suggestion.
-#more comment more comment more comment
+main()

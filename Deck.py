@@ -16,9 +16,9 @@ class Deck:
 
         #create killer set: person, weapon, room
         self.killer = []
-        self.killer[0] = cards.pop(randint(0,5))
-        self.killer[1] = cards.pop(randint(5,10))
-        self.killer[2] = cards.pop(randint(10,18))
+        self.killer.append(self.cards.pop(randint(0,5)))
+        self.killer.append(self.cards.pop(randint(5,10)))
+        self.killer.append(self.cards.pop(randint(10,18)))
 
         #shuffle deck
         shuffle(self.cards)
@@ -26,8 +26,8 @@ class Deck:
     def deal(self, count):
         #deals count number of cards from the top of the deck to a player
         hand = []
-        for i in range(0,count+1):
-            hand[i] = self.cards.pop(0)
+        for i in range(0,count):
+            hand.append(self.cards.pop(0))
         return(hand)
     
     def guess(self, accusation):
@@ -39,16 +39,8 @@ class Deck:
             print("Incorrect number of items. Try again")
             return(-1)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8627b514f103945ca608d77e0581bb88c38bdbb8
     def remainder(self):
         if len(self.cards)>0:
             return(self.cards)
         else:
-<<<<<<< HEAD
             return(None)
-=======
-            return(None)
->>>>>>> 8627b514f103945ca608d77e0581bb88c38bdbb8
