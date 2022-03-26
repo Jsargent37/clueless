@@ -10,7 +10,7 @@ from random import shuffle, randint
 class Deck:
     def __init__(self):
         #initialize deck: 6 people, 6 weapons, 9 rooms
-        self.cards = ["Colonel Mustard", "Professor Plum", "Reverend Green", "Mr. Peacock", " Miss Scarlet", "Mrs. White",
+        self.cards = ["Colonel Mustard", "Prof. Plum", "Mr. Green", "Mrs. Peacock", " Miss Scarlet", "Mrs. White",
         "Knife", "Candle Stick", "Revolver", "Rope", "Lead Pipe", "Wrench",
         "Hall", "Lounge", "Dining Room", "Kitchen", "Ball Room", "Conservatory", "Billiard Room", "Library", "Study"]
 

@@ -20,7 +20,7 @@ class Clue:
         self.prof_plum = Player("Prof. Plum", [1,0])
         self.set_players = [self.ms_scarlet, self.col_mustart, self.ms_white, self.mr_green, self.ms_peacock, self.prof_plum]
 
-        self.names = [" Miss Scarlet", "Colonel Mustard", "Mrs. White", "Reverend Green" ,"Mr. Peacock", "Professor Plum"]
+        self.names = ["Miss Scarlet", "Colonel Mustard", "Mrs. White", "Mr. Green" ,"Mrs. Peacock", "Prof. Plum"]
 
         for i in range(self.total_players):
             self.set_players[i].playing = True
@@ -31,60 +31,43 @@ class Clue:
 
     #Move players on board
     def move(self, location, player):
-        #accept a list of 2 coordinates and name of player being moved
-        legal = self.board.whereCanIMoveTo(location)
         player = self.names.index(player)
-        if legal:
+        #accept a tuple of 2 coordinates and name of player being moved
+        legal = self.board.whereCanIMoveTo(self.set_players[player].getCurrentPosition())
+        if location in legal:
             #unblock/block hallway if needed
+            self.board.blockAndUnblockHallway(self.set_players[player].getCurrentPosition())
             self.board.blockAndUnblockHallway(location)
             #update current position
             self.set_players[player].setCurrentPosition(location)
+            return(location)
+        else:
+            return(False)
     
     #make suggestion , 3 cards they are suggesting. have to move player to where they are being suggested
-    #Michelle
     def suggestion(self, suggest, playerSuggesting):
-        self.suggestedKiller = suggest[0]
-        self.suggestedWeapon = suggest[1]
-        self.suggestedRoom = suggest[2]
+        suggestedKiller = suggest[0]
+        suggestedWeapon = suggest[1]
+        suggestedRoom = suggest[2]
+        found = False
 
         #bring player into room
         for i in self.set_players:
-            if i.getName() == self.suggestedKiller:
-                self.newPosition = playerSuggesting.getCurrentPosition() 
-                i.setCurrentPosition = self.newPosition
+            if i.getName() == suggestedKiller:
+                newPosition = playerSuggesting.getCurrentPosition() 
+                i.setCurrentPosition = newPosition
 
 
-        #repeat until a player is able to be disprove suggestion
-        while True:
-            for i in range(self.set_player):
-                if self.set_player.getStatus :
-                    self.playerHand = i.getPlayerHand()
-                    if self.playerHand[0] == self.suggestedKiller:  
-                         #show card to player
-                        self.found = True
-                        break
-                    elif self.playerHand[1] == self.suggestedWeapon:
-                         #show card to player
-                         self.found = True
-                         break                           
-                    elif self.playerHand[2] == self.suggestedRoom:
-                        self.found = True 
-                        break 
-            if self.found:
-                break
 
-        return self.found
-
-    def accuse(self, accusation, player):
-        winner = False
-        winner = self.deck.guess(accusation)
-        player = self.names.index(player)
-
-        if not winner:
-            #knocked out for wrong guess
-            self.set_players[player].playing = winner
-
-        return(winner) 
+        #repeat until a player is able to be disprove suggestion 
+        while not found:
+            for i in self.set_players:
+                if i.getStatus():
+                    playerHand = i.getPlayerHand()
+                    if  (suggestedKiller in playerHand or suggestedWeapon in playerHand or suggestedRoom in playerHand) and (i.getName() != playerSuggesting.getName()):
+                        found = True
+                        card = i.disprove(suggest,i.getName(), self.cards_to_deal,playerHand)
+                        return card
 
     def testWinner(self):
         count = 0
@@ -92,9 +75,23 @@ class Clue:
         for i in range(self.total_players):
             if self.set_players[i].playing:
                 count += 1
-        if count > 1:
+        if count == 1:
             winner = True
         return(winner)
+                        
+    def accuse(self, accusation, player):
+        #Accuse will test to see if a players accusation matches the killer scenario for this game. 
+        #A boolean will be returned indicating wether they were successful.
+        winner = False
+        winner = self.deck.guess(accusation)
+        player = self.names.index(player)
+        if not winner:
+            #knocked out for wrong guess
+            self.set_players[player].playing = winner
+            print("Player Status")
+            print(self.set_players[player].playing)
+        return(winner) 
+
 
 def main():
     newGame = Clue(["Jack", "Michelle", "Rylee"])
@@ -102,8 +99,8 @@ def main():
     print()
     print("Winning Accusation:")
     print(newGame.deck.killer)
-    print()
-    for i in range(len(newGame.set_players)):
+    print('---------------------------------')
+    for i in range(newGame.total_players):
         if newGame.set_players[i].playing == True:
             print("Player:")
             print(newGame.set_players[i].getName())
@@ -126,5 +123,47 @@ def main():
     print("Excess Cards:")
     print(newGame.leftoverCards)
     print()
+
+    #card = newGame.suggestion(["Mr. Green", "Rope", "Lounge"], newGame.set_players[0])
+
+    #print(card)
+
+#-----------------------------Test Movement---------------------------------------------------------------------
+    #Move Miss Scarlet
+    print(newGame.board.whereCanIMoveTo(newGame.set_players[0].getCurrentPosition()))
+    pos = input('Input positions separate by commas. -1 to end')
+    pos = pos.split(',')
+    while (int(pos[0])!=-1):
+        newLoc=newGame.move((int(pos[0]),int(pos[1])), "Miss Scarlet")
+        print("You moved:")
+        print(newLoc)
+        pos = input('Input positions separate by commas. -1 to end')
+        pos = pos.split(',')
+    
+    #Move Colonel Mustard
+    print(newGame.board.whereCanIMoveTo(newGame.set_players[1].getCurrentPosition()))
+    pos = input('Input positions separate by commas. -1 to end')
+    pos = pos.split(',')
+    while int(pos[0])!=-1:
+        newLoc=newGame.move((int(pos[0]),int(pos[1])), "Colonel Mustard")
+        print("You moved:")
+        print(newLoc)
+        pos = input('Input positions separate by commas. -1 to end')
+        pos = pos.split(',')
+
+#------------------------------Test Accusation--------------------------------------------------------------------
+    winner = newGame.accuse(["Mr. Green", "Rope", "Lounge"], "Miss Scarlet")
+    print("Winner: ")
+    print(winner)
+    print('------------------------')
+    
+    winner = newGame.accuse(["Mr. Green", "Rope", "Lounge"], "Colonel Mustard")
+    print("Winner: ")
+    print(winner)
+    print('------------------------')
+#------------------------------Test Knockout Win--------------------------------------------------------------------
+    endOfGame = newGame.testWinner()
+    print("Game Over?")
+    print(endOfGame)
 
 main()

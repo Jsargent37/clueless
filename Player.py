@@ -21,11 +21,13 @@ class Player:
     #set player new hand
     def setPlayerHand(self,hand):
         self.playerHand = hand
-        
-    #call deck class to check if accusation is true
-    def checkSuggestion(self, suggestedCards):
-        return suggestedCards.guess(suggestedCards)
     
+    def getPlayerHand(self):
+        return self.playerHand
+
+    def getStatus(self):
+        return self.playing
+
     #return player name
     def getName(self):
         return self.name
@@ -37,3 +39,23 @@ class Player:
     #return current position
     def getCurrentPosition(self):
         return self.position
+
+    #return a card to disprove if another player has made a suggestion
+    def disprove(self, suggest,name,numberOfCards,playerHand):
+        wrongCard = True
+        print("This player is disproving the suggestion: ", name)
+        while wrongCard:
+            print("disprove while loop")
+            while True:
+                try:
+                    cardChosen = int(input("Choose a card to show to player to disprove"))  
+                    if cardChosen not in range(numberOfCards+1):
+                        raise Exception("Error: not in range")
+                    break
+                except:
+                    print(" " )
+
+            if (self.playerHand[cardChosen]) == suggest[0] or self.playerHand[cardChosen] == suggest[1] or self.playerHand[cardChosen] == suggest[2]:
+                wrongCard = False
+                break
+        return self.playerHand[cardChosen]
