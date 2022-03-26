@@ -20,6 +20,8 @@ class Clue:
         self.prof_plum = Player("Prof. Plum", [1,0])
         self.set_players = [self.ms_scarlet, self.col_mustart, self.ms_white, self.mr_green, self.ms_peacock, self.prof_plum]
 
+        self.names = [" Miss Scarlet", "Colonel Mustard", "Mrs. White", "Reverend Green" ,"Mr. Peacock", "Professor Plum"]
+
         for i in range(self.total_players):
             self.set_players[i].playing = True
             self.set_players[i].setPlayerHand(self.deck.deal(self.cards_to_deal))
@@ -28,9 +30,15 @@ class Clue:
         self.leftoverCards = self.deck.remainder()
 
     #Move players on board
-    #ryan lee 
-    def move(self, location):
-        pass
+    def move(self, location, player):
+        #accept a list of 2 coordinates and name of player being moved
+        legal = self.board.whereCanIMoveTo(location)
+        player = self.names.index(player)
+        if legal:
+            #unblock/block hallway if needed
+            self.board.blockAndUnblockHallway(location)
+            #update current position
+            self.set_players[player].setCurrentPosition(location)
     
     #make suggestion , 3 cards they are suggesting. have to move player to where they are being suggested
     #Michelle
@@ -67,14 +75,26 @@ class Clue:
 
         return self.found
 
-    def accuse(self, accusation):
+    def accuse(self, accusation, player):
         winner = False
         winner = self.deck.guess(accusation)
+        player = self.names.index(player)
+
+        if not winner:
+            #knocked out for wrong guess
+            self.set_players[player].playing = winner
+
         return(winner) 
 
-    #rylee
     def testWinner(self):
-        pass
+        count = 0
+        winner = False
+        for i in range(self.total_players):
+            if self.set_players[i].playing:
+                count += 1
+        if count > 1:
+            winner = True
+        return(winner)
 
 def main():
     newGame = Clue(["Jack", "Michelle", "Rylee"])
