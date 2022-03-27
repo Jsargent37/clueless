@@ -9,9 +9,6 @@ getCurrentPosition function returns the player's position
 
 #from Deck import Deck
 
-from operator import truediv
-
-
 class Player:
     
     #initalize player with name, hand and their starting position
@@ -20,14 +17,17 @@ class Player:
         self.playerHand = list
         self.playing = False
         self.position = startingPos
-
+    
     #set player new hand
     def setPlayerHand(self,hand):
         self.playerHand = hand
     
     def getPlayerHand(self):
         return self.playerHand
-        
+
+    def getStatus(self):
+        return self.playing
+
     #return player name
     def getName(self):
         return self.name
@@ -40,21 +40,23 @@ class Player:
     def getCurrentPosition(self):
         return self.position
 
-    def disprove(self, suggest):
+    #return a card to disprove if another player has made a suggestion
+    def disprove(self, suggest,name, numberOfCards, playerHand):
         wrongCard = True
+        print(name, ' is disproving player.')
         while wrongCard:
             while True:
                 try:
-                    cardChosen = int(input("Choose a card to show to player to disprove. 0 for Suspect, 1 for Weaspon, 2 for Killer"))  
-                    if cardChosen not in range(3):
+                    print(playerHand)
+                    cardChosen = int(input('Choose a card to show to player to disprove suggestion '))  
+                    if cardChosen not in range(numberOfCards+1):
                         raise Exception("Error: not in range")
                     break
                 except:
-                    print("Please enter valid number. 0 for Susepct, 1 for Weapon, 2 for Killer")
+                    print(" " )
 
-            print(self.playerHand[cardChosen])
-            if (self.playerHand[cardChosen]) == suggest[0] or self.playerHand[cardChosen] == suggest[1] or self.playerHand[cardChosen] == suggest[1]:
+            if (self.playerHand[cardChosen]) == suggest[0] or self.playerHand[cardChosen] == suggest[1] or self.playerHand[cardChosen] == suggest[2]:
                 wrongCard = False
                 break
-            print("Card not in suggested deck")  
-        return cardChosen
+            print("Card not in suggested Deck")
+        return self.playerHand[cardChosen]
