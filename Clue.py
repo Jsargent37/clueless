@@ -50,6 +50,8 @@ class Clue:
         suggestedWeapon = suggest[1]
         suggestedRoom = suggest[2]
         found = False
+        card = -1
+        numPlayer = 0
 
         #bring player into room
         for i in self.set_players:
@@ -60,17 +62,24 @@ class Clue:
 
 
         #repeat until a player is able to be disprove suggestion 
-        for i in self.set_players:
-            if i.getStatus():
-                playerHand = i.getPlayerHand()
-                if  suggestedKiller in playerHand or suggestedWeapon in playerHand or suggestedRoom in playerHand:
+        print(self.total_players)
+        while numPlayer < self.total_players and not found:
+            for i in self.set_players:
+                if i.getStatus():
+                    numPlayer +=1
+                    playerHand = i.getPlayerHand()
+                    #f  suggestedKiller in playerHand or suggestedWeapon in playerHand or suggestedRoom in playerHand:
                     if (i.getName() != playerSuggesting.getName()):
-                        found = True
                         card = i.disprove(suggest,i.getName(), self.cards_to_deal,playerHand)
-                        
-        if not found:
-            print("No card was used to disprove")
+                        if card != -1:
+                            found = True
 
+                    if found:
+                        break
+
+        return card
+                            
+        
     def testWinner(self):
         count = 0
         winner = False
@@ -132,8 +141,6 @@ def main():
     card = newGame.suggestion(["Mr. Green", "Rope", "Lounge"], newGame.set_players[0])
     print(card)
 
-    card = newGame.suggestion(["Miss Scarlett", "Revolver", "Dining Room"], newGame.set_players[1])
-    print(card)
 
 #-----------------------------Test Movement---------------------------------------------------------------------
     #Move Miss Scarlet

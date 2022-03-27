@@ -43,20 +43,26 @@ class Player:
     #return a card to disprove if another player has made a suggestion
     def disprove(self, suggest,name, numberOfCards, playerHand):
         wrongCard = True
+        cardChosen = 0
         print(name, ' is disproving player.')
-        while wrongCard:
+        while (cardChosen != -1 ) and (wrongCard):
             while True:
                 try:
                     print(playerHand)
-                    cardChosen = int(input('Choose a card to show to player to disprove suggestion '))  
-                    if cardChosen not in range(numberOfCards+1):
+                    cardChosen = int(input('Choose a card to show to player to disprove suggestion or -1 if no card can be used to disprove'))
+                    print(cardChosen)
+                    if cardChosen not in range(-1,numberOfCards+1):
                         raise Exception("Error: not in range")
                     break
                 except:
                     print(" " )
-
+            
             if (self.playerHand[cardChosen]) == suggest[0] or self.playerHand[cardChosen] == suggest[1] or self.playerHand[cardChosen] == suggest[2]:
                 wrongCard = False
                 break
-            print("Card not in suggested Deck")
-        return self.playerHand[cardChosen]
+            else:
+                print("Card not in suggested Deck")
+            
+
+
+        return cardChosen
