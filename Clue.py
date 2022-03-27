@@ -60,14 +60,16 @@ class Clue:
 
 
         #repeat until a player is able to be disprove suggestion 
-        while not found:
-            for i in self.set_players:
-                if i.getStatus():
-                    playerHand = i.getPlayerHand()
-                    if  (suggestedKiller in playerHand or suggestedWeapon in playerHand or suggestedRoom in playerHand) and (i.getName() != playerSuggesting.getName()):
+        for i in self.set_players:
+            if i.getStatus():
+                playerHand = i.getPlayerHand()
+                if  suggestedKiller in playerHand or suggestedWeapon in playerHand or suggestedRoom in playerHand:
+                    if (i.getName() != playerSuggesting.getName()):
                         found = True
                         card = i.disprove(suggest,i.getName(), self.cards_to_deal,playerHand)
-                        return card
+                        
+        if not found:
+            print("No card was used to disprove")
 
     def testWinner(self):
         count = 0
