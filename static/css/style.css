@@ -1,0 +1,42 @@
+h1 {
+    font-size: 60px;
+  }
+
+div{
+    float: left;
+    position: relative;
+}
+img{
+     vertical-align: bottom;   
+}
+
+#Ms_Scarlet{
+  position: absolute;
+  top: 370px;
+  left: 500px;
+}
+#Prof_Plum{
+  position: absolute;
+  top: 415px;
+  left: 90px;
+}
+#Mrs_Peacock{
+  position: absolute;
+  top: 180px;
+  left: 90px;
+}
+#Col_Mustard{
+  position: absolute;
+  top: 180px;
+  left: 620px;
+}
+#Mr_Green{
+  position: absolute;
+  top: 530px;
+  left: 225px;
+}
+#Mrs_White{
+  position: absolute;
+  top: 530px;
+  left: 500px;
+}

@@ -5,11 +5,18 @@
     </head>
     <body>
         <h>Hi, {{user}}!</h>
-        <form action = "#" method = "post">
+        <form name = "inputgc" action = "#" method = "post">
             <p>If you have a game code for your game, please input it here: </p>
-            <p><input type = "text" name = "gc" /></p>
+            <p><input type = "text" id = "gc" name = "gc" /></p>
             <p>If you do not have a code, you can generate one here:</p>
-            <p><input type = "submit" name = "gc" /></p>
+            <p><input type = "button" id = "gc" value = "Generate Code" onclick= "Random();" /></p>
+            <input type = "submit" value = "Submit" />
         </form>
+        <script type = "text/javascript">
+            function Random() {
+                var gencode = Math.floor(Math.random() * 10000000);
+                document.getElementById("gc").value = gencode;
+            }
+        </script>
     </body>
 </html>

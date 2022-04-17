@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Clue Board</title>
+    <h1> Clue Board ({{gc}})</h1>
+    <link href="static/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="Clue_Board">
+        <img src="static/images/board.png" id="Clue_Board" alt="Clue_Board">
+        <img src="static/images/Col_Mustard.png" width=30 height= auto id="Col_Mustard" alt="Col_Mustard">
+        <img src="static/images/Mr_Green.png" width=30 height= auto id="Mr_Green" alt="Mr_Green">
+        <img src="static/images/Mrs_Peacock.png" width=30 height= auto id="Mrs_Peacock" alt="Mrs_Peacock">
+        <img src="static/images/Ms_Scarlet.png" width=30 height= auto id="Ms_Scarlet" alt="Ms_Scarlet">
+        <img src="static/images/Mrs_White.png" width=30 height= auto id="Mrs_White" alt="Mrs_White">
+        <img src="static/images/Prof_Plum.png" width=30 height= auto id="Prof_Plum" alt="Prof_Plum">
+    </div>
+
+    <h2>Hi, {{user}}.</h2>
+    <h2> You are: {{pc}}</h2>
+    <h2> Hand: </h2>
+ 
+    <form method="post" action="/">
+        
+        <input type = "button" onClick = "move_img('down')" value = 'Move Down'> 
+        <input type = "button" onClick = "move_img('up')" value = 'Move Up'> 
+        <input type = "button" onClick = "move_img('left',{{pc}})" value = 'Move Left'> 
+        <input type = "button" onClick = "move_img('right')" value = 'Move Right'> 
+        <input type = "button" onClick = "move_img('jump')" value = 'Jump'> 
+
+    </form>
+    
+    <h2> Guess or Accuse </h2>
+    <input type="checkbox" id="guess" name="guess" value="guess">
+    <label for="guess"> Guess</label><br>
+    <input type="checkbox" id="accuse" name="accuse" value="accuse">
+    <label for="accuse"> Accuse</label><br>
+
+    <h3> Weapon:</h3>
+    <select name="Guess Weapon" id="guess_weapon">
+        <option value="weapon1">Revolver</option>
+        <option value="weapon2">Knife</option>
+        <option value="weapon3">Lead Pipe</option>
+        <option value="weapon4">Rope</option>
+        <option value="weapon5">Candle Stick</option>
+        <option value="weapon6">Wrench</option>
+    </select>
+
+    <h3> Room:</h3>
+    <select name="Guess Room" id="guess_room">
+        <option value="room1">Study</option>
+        <option value="room2">Hall</option>
+        <option value="room3">Lounge</option>
+        <option value="room4">Library</option>
+        <option value="room5">Billiard Room</option>
+        <option value="room6">Dining Room</option>
+        <option value="room7">Conservatory</option>
+        <option value="room8">Ballroom</option>
+        <option value="room9">Kitchen</option>
+    </select>
+
+    <h3> Killer:</h3>
+    <select name="Guess Killer" id="guess_killer">
+        <option value="player1">Ms. Scarlet</option>
+        <option value="player2">Col. Mustard</option>
+        <option value="player3">Mrs. White</option>
+        <option value="player4">Mr. Green</option>
+        <option value="player5">Mrs. Peacock</option>
+        <option value="player6">Prof. Plum</option>
+    </select>
+
+    <form method="post" action="/">
+        <input type="submit" name = "end_turn" value="Submit">
+    </form>
+    
+
+    <script src="static/js/main.js"></script>
+  </body>
+</html>
