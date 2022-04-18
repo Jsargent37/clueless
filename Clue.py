@@ -12,15 +12,15 @@ class Clue:
         self.cards_to_deal = 18//self.total_players
 
         #initialize players
-        self.ms_scarlet = Player("Miss Scarlet", [0,3])
-        self.col_mustart = Player("Col. Mustard", [1,4])
-        self.ms_white = Player("Mrs. White", [4,3])
-        self.mr_green = Player("Mr. Green", [4,1])
-        self.ms_peacock = Player("Mrs. Peacock", [3,0])
-        self.prof_plum = Player("Prof. Plum", [1,0])
+        self.ms_scarlet = Player("Ms_Scarlet", "Miss Scarlet", [0,3])
+        self.col_mustart = Player("Col_Mustard", "Col. Mustard", [1,4])
+        self.ms_white = Player("Mrs_White", "Mrs. White", [4,3])
+        self.mr_green = Player("Mr_Green", "Mr. Green", [4,1])
+        self.ms_peacock = Player("Mrs_Peacock", "Ms. Peacock", [3,0])
+        self.prof_plum = Player("Prof_Plum", "Professor Plum", [1,0])
         self.set_players = [self.ms_scarlet, self.col_mustart, self.ms_white, self.mr_green, self.ms_peacock, self.prof_plum]
 
-        self.names = ["Miss Scarlet", "Colonel Mustard", "Mrs. White", "Mr. Green" ,"Mrs. Peacock", "Prof. Plum"]
+        self.names = ["Ms_Scarlet", "Col_Mustard", "Mrs_White", "Mr_Green" ,"Mrs_Peacock", "Prof_Plum"]
 
         for i in range(self.total_players):
             self.set_players[i].playing = True
@@ -92,7 +92,7 @@ class Clue:
             print(self.set_players[player].playing)
         return(winner) 
 
-
+'''
 def main():
     newGame = Clue(["Jack", "Michelle", "Rylee"])
     
@@ -167,3 +167,4 @@ def main():
     print(endOfGame)
 
 main()
+'''

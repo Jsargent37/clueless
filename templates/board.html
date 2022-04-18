@@ -22,33 +22,33 @@
     <h2> Hand: </h2>
  
     <form method="post" action="/">
-        
-        <input type = "button" onClick = "move_img('down')" value = 'Move Down'> 
-        <input type = "button" onClick = "move_img('up')" value = 'Move Up'> 
-        <input type = "button" onClick = "move_img('left',{{pc}})" value = 'Move Left'> 
-        <input type = "button" onClick = "move_img('right')" value = 'Move Right'> 
-        <input type = "button" onClick = "move_img('jump')" value = 'Jump'> 
-
+        <input type = "button" onClick = "move_img('down', '{{pc}}')" value = 'Move Down'> 
+        <input type = "button" onClick = "move_img('up', '{{pc}}')" value = 'Move Up'><br><br>
+        <input type = "button" onClick = "move_img('left', '{{pc}}')" value = 'Move Left'> 
+        <input type = "button" onClick = "move_img('right', '{{pc}}')" value = 'Move Right'><br><br>
+        <input type = "button" onClick = "move_img('jump', '{{pc}}')" value = 'Jump'> 
     </form>
-    
-    <h2> Guess or Accuse </h2>
-    <input type="checkbox" id="guess" name="guess" value="guess">
-    <label for="guess"> Guess</label><br>
-    <input type="checkbox" id="accuse" name="accuse" value="accuse">
-    <label for="accuse"> Accuse</label><br>
 
-    <h3> Weapon:</h3>
-    <select name="Guess Weapon" id="guess_weapon">
+
+    <form method="post" action="/"></form>
+      <h2 style = "text-align:left"> Guess or Accuse </h2>
+      <input type="radio" id="guess" name="guess" value="guess">
+      <label for="guess"> Guess</label><br>
+      <input type="radio" id="accuse" name="accuse" value="accuse">
+      <label for="accuse"> Accuse</label><br>
+
+      <h3> Weapon:</h3>
+      <select name="Guess Weapon" id="guess_weapon">
         <option value="weapon1">Revolver</option>
         <option value="weapon2">Knife</option>
         <option value="weapon3">Lead Pipe</option>
         <option value="weapon4">Rope</option>
         <option value="weapon5">Candle Stick</option>
         <option value="weapon6">Wrench</option>
-    </select>
+      </select>
 
-    <h3> Room:</h3>
-    <select name="Guess Room" id="guess_room">
+      <h3> Room:</h3>
+      <select name="Guess Room" id="guess_room">
         <option value="room1">Study</option>
         <option value="room2">Hall</option>
         <option value="room3">Lounge</option>
@@ -58,23 +58,19 @@
         <option value="room7">Conservatory</option>
         <option value="room8">Ballroom</option>
         <option value="room9">Kitchen</option>
-    </select>
+      </select>
 
-    <h3> Killer:</h3>
-    <select name="Guess Killer" id="guess_killer">
+      <h3> Killer:</h3>
+      <select name="Guess Killer" id="guess_killer">
         <option value="player1">Ms. Scarlet</option>
         <option value="player2">Col. Mustard</option>
         <option value="player3">Mrs. White</option>
         <option value="player4">Mr. Green</option>
         <option value="player5">Mrs. Peacock</option>
         <option value="player6">Prof. Plum</option>
-    </select>
-
-    <form method="post" action="/">
-        <input type="submit" name = "end_turn" value="Submit">
+      </select>
+      <p><input type="submit" name = "end_turn" value="Submit"></p>
     </form>
-    
-
     <script src="static/js/main.js"></script>
   </body>
 </html>

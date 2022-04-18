@@ -12,8 +12,9 @@ getCurrentPosition function returns the player's position
 class Player:
     
     #initalize player with name, hand and their starting position
-    def __init__(self, name, startingPos):
-        self.name = name
+    def __init__(self, refName, displayName, startingPos):
+        self.refName = refName
+        self.displayName = displayName
         self.playerHand = list
         self.playing = False
         self.position = startingPos
@@ -30,7 +31,7 @@ class Player:
 
     #return player name
     def getName(self):
-        return self.name
+        return self.displayName
     
     #set current position
     def setCurrentPosition(self,pos):

@@ -80,6 +80,7 @@ def login():
 def startuppage():
     if "user" in session:
         if request.method == "POST":
+            newGame = Clue([session["user"], "Rylee", "Michelle"])
             game_code = request.form["gc"]
             #found_gc = game.query.filter_by(room=game_code)
             #play = game(game_code[0])
@@ -99,6 +100,8 @@ def pickcharacter():
     if "user" in session and "gc" in session:
         if request.method == "POST":
             session["pc"] = request.form["PC"]
+            print(session["pc"])
+            print(type(session["pc"]))
             parameters.append("pc")
             return redirect(url_for("board"))
         else:
@@ -113,8 +116,7 @@ def board():
     gc = session["gc"]
     user = session["user"]
     pc = session["pc"]
-    
-    newGame = Clue([user, "Rylee", "Michelle"])
+    #session["hand"] = newGame.set_players
 
     return(render_template("board.html", pc = pc, gc = gc, user = user))
 
