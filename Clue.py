@@ -3,8 +3,8 @@ from Game_Board import Board
 from Player import Player
 
 class Clue:
-    def __init__(self, player_names):
-        self.total_players = len(player_names)
+    def __init__(self):
+        self.total_players = 0
 
         self.deck = Deck()
         self.board = Board()
@@ -22,10 +22,12 @@ class Clue:
 
         self.names = ["Ms_Scarlet", "Col_Mustard", "Mrs_White", "Mr_Green" ,"Mrs_Peacock", "Prof_Plum"]
 
+    
+    def startGame(self):
         for i in range(self.total_players):
-            self.set_players[i].playing = True
-            self.set_players[i].setPlayerHand(self.deck.deal(self.cards_to_deal))
-            self.board.blockAndUnblockHallway(self.set_players[i].getCurrentPosition())
+            if self.set_players[i].playing == True:
+                self.set_players[i].setPlayerHand(self.deck.deal(self.cards_to_deal))
+                self.board.blockAndUnblockHallway(self.set_players[i].getCurrentPosition())
         
         self.leftoverCards = self.deck.remainder()
 
