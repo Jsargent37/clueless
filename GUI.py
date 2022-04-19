@@ -80,8 +80,16 @@ def login():
 def startuppage():
     if "user" in session:
         if request.method == "POST":
-            newGame = Clue([session["user"], "Rylee", "Michelle"])
             game_code = request.form["gc"]
+
+            """
+            needs to be an if statement of if gc is in the database
+            add player to the database and the clue game
+            if gc is not in database, create new clue game instance
+            add clue game to the database and add player to clue game and database
+            """
+            newGame = Clue([session["user"], "Rylee", "Michelle"])
+
             #found_gc = game.query.filter_by(room=game_code)
             #play = game(game_code[0])
             #db.session.add(play)
@@ -103,6 +111,14 @@ def pickcharacter():
             print(session["pc"])
             print(type(session["pc"]))
             parameters.append("pc")
+
+            """
+            After picking player, user should be redirected to a waiting room
+            which has a start button that appears only after 2 other users have
+            joined that specific game. After hitting start button, they would 
+            get redirected to the game board.
+            """
+
             return redirect(url_for("board"))
         else:
             return render_template("pickcharacter.html", user = session["user"])
