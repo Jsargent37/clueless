@@ -7,6 +7,7 @@ from Clue import Clue
 app = Flask(__name__)
 app.secret_key = "super secret session key dont tell anyone"
 app.permanent_session_lifetime = timedelta(hours=12)
+socketio = SocketIO(app)
 parameters = []
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
