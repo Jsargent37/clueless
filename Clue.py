@@ -9,7 +9,7 @@ class Clue:
         self.deck = Deck()
         self.board = Board()
 
-        self.cards_to_deal = 18//self.total_players
+        self.cards = 18
 
         #initialize players
         self.ms_scarlet = Player("Ms_Scarlet", "Miss Scarlet", [0,3])
@@ -26,7 +26,7 @@ class Clue:
     def startGame(self):
         for i in range(self.total_players):
             if self.set_players[i].playing == True:
-                self.set_players[i].setPlayerHand(self.deck.deal(self.cards_to_deal))
+                self.set_players[i].setPlayerHand(self.deck.deal(self.cards//self.total_players))
                 self.board.blockAndUnblockHallway(self.set_players[i].getCurrentPosition())
         
         self.leftoverCards = self.deck.remainder()
@@ -68,7 +68,7 @@ class Clue:
                     playerHand = i.getPlayerHand()
                     if  (suggestedKiller in playerHand or suggestedWeapon in playerHand or suggestedRoom in playerHand) and (i.getName() != playerSuggesting.getName()):
                         found = True
-                        card = i.disprove(suggest,i.getName(), self.cards_to_deal,playerHand)
+                        card = i.disprove(suggest,i.getName(), self.cards//self.total_players,playerHand)
                         return card
 
     def testWinner(self):

@@ -1,10 +1,11 @@
 from flask import Flask, redirect, url_for, render_template, request, session
+from flask_socketio import SocketIO
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from Clue import Clue
 
 app = Flask(__name__)
-app.secret_key = "super secret key dont tell anyone"
+app.secret_key = "super secret session key dont tell anyone"
 app.permanent_session_lifetime = timedelta(hours=12)
 parameters = []
 
@@ -88,8 +89,8 @@ def startuppage():
             if gc is not in database, create new clue game instance
             add clue game to the database and add player to clue game and database
             """
-            newGame = Clue([session["user"], "Rylee", "Michelle"])
 
+            
             #found_gc = game.query.filter_by(room=game_code)
             #play = game(game_code[0])
             #db.session.add(play)
@@ -108,10 +109,8 @@ def pickcharacter():
     if "user" in session and "gc" in session:
         if request.method == "POST":
             session["pc"] = request.form["PC"]
-            print(session["pc"])
-            print(type(session["pc"]))
             parameters.append("pc")
-
+            
             """
             After picking player, user should be redirected to a waiting room
             which has a start button that appears only after 2 other users have
@@ -119,7 +118,7 @@ def pickcharacter():
             get redirected to the game board.
             """
 
-            return redirect(url_for("board"))
+            return redirect(url_for("waitingroom"))
         else:
             return render_template("pickcharacter.html", user = session["user"])
     elif "user" in session and "gc" not in session:
@@ -127,13 +126,34 @@ def pickcharacter():
     else:
         return redirect(url_for("login"))
 
+@app.route("/waitingroom", methods = ["GET", "POST"])
+def waitingroom():
+    if "user" in session and "gc" in session and "pc" in session:
+        if request.method == "POST":
+            return redirect(url_for("board"))
+        else:
+            return render_template("waitingroom.html", user = session)
+    elif "user" in session and "gc" in session and "pc" not in session:
+        return redirect(url_for("pickcharacter"))
+    elif "user" in session and "gc" not in session:
+        if "pc" in session:
+            session.pop("pc")
+        return redirect(url_for("startuppage"))
+    else:
+        if "pc" in session and "gc" in session:
+            session.pop("pc")
+            session.pop("gc")
+        return redirect(url_for("login"))
+
 @app.route("/board")
 def board():
     gc = session["gc"]
     user = session["user"]
     pc = session["pc"]
+    
     #session["hand"] = newGame.set_players
-
+    #newGame = session["newGame"]
+    
     return(render_template("board.html", pc = pc, gc = gc, user = user))
 
 @app.route("/logout")
