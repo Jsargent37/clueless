@@ -2,12 +2,23 @@ from flask import Flask, redirect, url_for, render_template, request, session
 from flask_socketio import SocketIO
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-from Clue import Clue
+#from Clue import Clue
+import socket
+
+HEADER = 64
+PORT = 5050
+FORMAT = 'utf-8'
+DISCONNECT_MESSAGE = '!DISCONNECT'
+SERVER = "192.168.0.228"
+ADDR = (SERVER, PORT)
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(ADDR)
 
 app = Flask(__name__)
 app.secret_key = "super secret session key dont tell anyone"
 app.permanent_session_lifetime = timedelta(hours=12)
-socketio = SocketIO(app)
+##socketio = SocketIO(app)
 parameters = []
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
@@ -64,6 +75,18 @@ def __init__ (self, room):
         self.player6 = False
         self.x6 = 1
         self.y6 = 0
+
+def send(msg):
+    message = msg.encode(FORMAT)
+    msg_length = len(message)
+    send_length = str(msg_length).encode(FORMAT)
+    send_length += b" " * (HEADER - len(send_length))
+    client.send(send_length)
+    client.send(message)
+
+send("hello world!")
+send(input())
+send(DISCONNECT_MESSAGE)
 
 @app.route("/", methods = ["GET", "POST"])
 def login():
