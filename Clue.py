@@ -5,7 +5,7 @@ from xmlrpc.client import Server
 
 HEADER = 64
 PORT = 5050
-SERVER = "98.164.92.146"
+SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = '!DISCONNECT'
